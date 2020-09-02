@@ -225,6 +225,30 @@ class PxPayAuthorizeRequest extends AbstractRequest
     {
         return $this->setParameter('forcePaymentMethod', $value);
     }
+    
+    /**
+     * Get the Callback Url
+     *
+     * Optional parameter can be used to set a callback url to notify your server of the result of a transaction
+     *
+     * @return mixed
+     */
+    public function getCallbackUrl()
+    {
+        return $this->getParameter('callbackUrl');
+    }
+
+    /**
+     * Set the Callback Url field on the request
+     *
+     * @param string $value  The callback url Windcave should GET to after a transaction is completed
+     *
+     * @return mixed
+     */
+    public function setCallbackUrl($value)
+    {
+        return $this->setParameter('callbackUrl', $value);
+    }
 
 
     /**
@@ -244,6 +268,7 @@ class PxPayAuthorizeRequest extends AbstractRequest
         $data->CurrencyInput = $this->getCurrency();
         $data->UrlSuccess = $this->getReturnUrl();
         $data->UrlFail = $this->getCancelUrl() ?: $this->getReturnUrl();
+        $data->UrlCallback = $this->getCallbackUrl();
 
         if ($this->getDescription()) {
             $data->MerchantReference = $this->getDescription();
